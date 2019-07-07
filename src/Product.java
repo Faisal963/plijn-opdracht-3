@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product {
 	private String productNaam;
 	private String beschrijving;
 	private double prijs;
 	private int productnummer;
+	private List<OvChipkaart> ovs = new ArrayList<OvChipkaart>();
 	
 	public Product() {}
 	
@@ -37,5 +40,11 @@ public class Product {
 	
 	public double getPrijs() {
 		return this.prijs;
+	}
+	
+	public void voegOvToe(OvChipkaart ov) {
+		if (!this.ovs.contains(ov)) {
+			this.ovs.add(ov);
+		}
 	}
 }

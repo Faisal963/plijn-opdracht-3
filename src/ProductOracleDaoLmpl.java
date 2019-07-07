@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductOracleDaoLmpl extends OracleBaseDao implements ProductDao {
+	List<OvChipkaart> ovs = new ArrayList<OvChipkaart>();
 	
 	public List<Product> findByKaartnummer(int kaartnummer) {
+		OvChipkaartOracleDaoLmpl ovDi = new OvChipkaartOracleDaoLmpl();
 		List<Product> producten = new ArrayList<Product>();
 		
 		try {
@@ -24,6 +26,11 @@ public class ProductOracleDaoLmpl extends OracleBaseDao implements ProductDao {
 				p.setProductNaam(rs.getString("PRODUCTNAAM"));
 				p.setBeschrijving(rs.getString("BESCHRIJVING"));
 				p.setPrijs(rs.getFloat("PRIJS"));
+				
+				
+				for (OvChipkaart ov : ovDi.findByReiziger(p.getProductnummer())) {
+					p.voegOvToe(ov);	
+				}
 				producten.add(p);
 			}
 		} catch (SQLException e) {
